@@ -13,6 +13,7 @@ class WurbSettings:
 
     def __init__(self):
         """ """
+        self.logger = logging.getLogger("bat_migration")
         self.clear()
 
     def clear(self):
@@ -35,7 +36,7 @@ class WurbSettings:
         settings_path = pathlib.Path(directory_name, "wurb_rec_settings.txt")
         with settings_path.open("r") as file:
             rows = file.readlines()
-        #
+        # Create dictionary.
         for row in rows:
             if "#" in row:
                 parts = row.split("#")
@@ -47,5 +48,3 @@ class WurbSettings:
             value = parts[1].strip()
             if (len(key) > 0) and (len(value) > 0):
                 self.settings_dict[key] = str(value)
-        # TEST:
-        print(self.settings_dict)

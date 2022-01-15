@@ -14,6 +14,7 @@ class BatMigrationMetadata:
 
     def __init__(self):
         """ """
+        self.logger = logging.getLogger("bat_migration")
         self.metadata_config = {}
         self.column_delimiter = "\t"
         self.row_delimiter = "\n"
@@ -24,7 +25,7 @@ class BatMigrationMetadata:
         """ """
         # Load config from yaml-file.
         config_path = pathlib.Path(config_file)
-        with open(config_path) as file:
+        with config_path.open("r") as file:
             self.metadata_config = yaml.load(file, Loader=yaml.FullLoader)
         # Load "columnDelimiter" and "rowDelimiter".
         self.column_delimiter = self.metadata_config.get(
@@ -46,14 +47,10 @@ class BatMigrationMetadata:
             self.export_columns_dict[key] = value
 
     def save_metadata(
-        self,
-        metadata_file="Metadata_table.csv",
-        metadata_dir="",
-        source_metadata=[],
+        self, metadata_dir="", metadata_file="Metadata_table.csv", source_metadata=[]
     ):
         """ """
-        logger = logging.getLogger("bat_migration")
-        logger.info("Writing to metadata file: " + metadata_file)
+        self.logger.info("- Writing to metadata file: " + metadata_file)
         row_counter = 0
         # Open metadata file.
         metadata_path = pathlib.Path(metadata_dir, metadata_file)
@@ -85,4 +82,4 @@ class BatMigrationMetadata:
                 file.write(self.column_delimiter.join(out_row) + self.row_delimiter)
                 row_counter += 1
         # Done.
-        logger.info("Number of rows in metadata file: " + str(row_counter))
+        self.logger.info("- Number of rows in metadata: " + str(row_counter))

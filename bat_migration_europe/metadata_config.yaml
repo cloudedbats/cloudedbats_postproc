@@ -1,7 +1,7 @@
 # Mapping between internal format and "Bat Migration Europe" metadata format.
 # More info: https://bat-migration-europe.netlify.app
 # 
-# Source code: https://github.com/cloudedbats/cloudedbats_postproc.
+# Source code: https://github.com/cloudedbats/cloudedbats_postproc
 
 columnDelimiter: ";"
 rowDelimiter: "\r\n"
@@ -19,7 +19,7 @@ exportMetadataColumns:
     - Country:
         sourceKey: monitoring_country
     - Site:
-        sourceKey: monitoring_site_name
+        sourceKey: monitoring_site
     - X:
         sourceKey: decimal_longitude
     - Y:

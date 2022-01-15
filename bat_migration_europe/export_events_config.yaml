@@ -3,15 +3,8 @@
 # 
 # Source code: https://github.com/cloudedbats/cloudedbats_postproc
 
-sourceFiles:
-    directory: 
-        export_data
-    # globSearch:
-    # files:
-
-targets:
-    directory:
-        export_data
+exportDirectory:
+        ../bat_migration_export_2022
 
 staticMetadata:
     contact_first_name: Arnold
@@ -32,12 +25,12 @@ staticMetadata:
     # microphone_low_pass_filter_khz: 
     # pause_between_rec_s: 
     # is_noise_filter_activated: 
-    monitoring_event_comment: License CC0.
+    monitoring_event_comment: Licence CC0 1.0
 
 dynamicMetadata:
-    - monitoring_site_name
-    - decimal_longitude
+    - monitoring_site
     - decimal_latitude
+    - decimal_longitude
     - monitoring_event
     - event_start_date
     - event_end_date
