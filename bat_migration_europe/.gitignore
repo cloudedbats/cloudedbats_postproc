@@ -1,0 +1,7 @@
+
+venv
+
+*_log.txt
+Metadata_table.csv
+
+**/.DS_Store

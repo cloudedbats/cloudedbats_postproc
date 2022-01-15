@@ -1,0 +1,97 @@
+# Mapping between internal format and "Bat Migration Europe" metadata format.
+# More info: https://bat-migration-europe.netlify.app
+# 
+# Source code: https://github.com/cloudedbats/cloudedbats_postproc.
+
+columnDelimiter: ";"
+rowDelimiter: "\r\n"
+
+exportMetadataColumns:
+    - FirstName:
+        sourceKey: contact_first_name
+    - FamilyName:
+        sourceKey: contact_family_name
+    - Email:
+        sourceKey: contact_email
+    - Affiliation:
+        sourceKey: contact_affiliation
+        default: (Independent)
+    - Country:
+        sourceKey: monitoring_country
+    - Site:
+        sourceKey: monitoring_site_name
+    - X:
+        sourceKey: decimal_longitude
+    - Y:
+        sourceKey: decimal_latitude
+    - Participation:
+        sourceKey: monitoring_event
+    - StartDate:
+        sourceKey: event_start_date
+    - EndDate:
+        sourceKey: event_end_date
+    - StartTime:
+        sourceKey: event_start_time
+    - EndTime:
+        sourceKey: event_end_time
+    - TypeStudy:
+        sourceKey: type_study_code
+        default: 1 # 1=Ground level. 
+    - TypeStudyOther:
+        sourceKey: type_study_text
+        default: ""
+    - PositionNacelle:
+        sourceKey: detector_position_nacelle
+        default: ""
+    - MicHeight:
+        sourceKey: microphone_height_m
+        default: 2
+    - Recorder:
+        sourceKey: detector_model_code
+        default: 24 # 24=Other.
+    - RecorderOther:
+        sourceKey: detector_model_text
+        default: Custom - CloudedBats-WURB-2020
+    - Mic: 
+        sourceKey: microphone_model_code
+        default: 23 # 23=Other extrenal microphone with horn.
+    - MicOther:
+        sourceKey: microphone_model_text
+        default: Pettersson u384
+    - GainRecorder:
+        sourceKey: gain_level
+        default: 999
+    - HPF:
+        sourceKey: microphone_high_pass_filter_khz
+        default: 0
+    - LPF:
+        sourceKey: microphone_low_pass_filter_khz
+        default: 999
+    - FreqMin:
+        sourceKey: detection_limit_khz
+    - FreqMax:
+        text: 999
+    - TriggerLevel:
+        sourceKey: detection_sensitivity_dbfs
+    - MinDur:
+        text: 0
+    - MaxDur:
+        text: 999
+    - TrigWin:
+        text: 999
+    - Pause:
+        sourceKey: pause_between_rec_s
+        default: 0
+    - TrigWinMax:
+        text: 999
+    - FileSplittingLength:
+        sourceKey: rec_length_s
+    - NoiseFilter:
+        sourceKey: is_noise_filter_activated
+        default: "no"
+    - Partner:
+        sourceKey: is_partner
+        default: "no"
+    - Comment:
+        sourceKey: monitoring_event_comment
+        default: License CC0.
