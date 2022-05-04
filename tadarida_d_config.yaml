@@ -1,0 +1,8 @@
+# Mapping between internal format and "Bat Migration Europe" metadata format.
+# More info: https://bat-migration-europe.netlify.app
+#
+# Source code: https://github.com/cloudedbats/cloudedbats_postproc
+
+pathToTadatridaD: /home/pi/Tadarida-D/install_rpi/TadaridaD
+
+baseDirectory: /mnt/usb4tb/rec2022/
