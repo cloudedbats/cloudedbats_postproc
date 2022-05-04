@@ -1,0 +1,7 @@
+venv
+*.pyc
+
+*_log.txt
+*.wav
+
+.DS_Store

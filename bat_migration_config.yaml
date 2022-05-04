@@ -1,31 +1,33 @@
 # Mapping between internal format and "Bat Migration Europe" metadata format.
 # More info: https://bat-migration-europe.netlify.app
-# 
+#
 # Source code: https://github.com/cloudedbats/cloudedbats_postproc
 
-exportDirectory:
-        ../bat_migration_export_2022
+sourceDirectory:
+    ../bat_migration_europe/source
+targetDirectory:
+    ../bat_migration_europe/target
 
 staticMetadata:
     contact_first_name: Arnold
     contact_family_name: Andreasson
     contact_email: arnold@cloudedbats.org
-    # contact_affiliation: 
+    # contact_affiliation:
     monitoring_country: Sweden
-    # type_study_code: 
-    # type_study_text: 
-    # detector_position_nacelle: 
-    microphone_height_m: 2
-    # detector_model_code: 
+    # type_study_code:
+    # type_study_text:
+    # detector_position_nacelle:
+    microphone_height_m: 3
+    # detector_model_code:
     detector_model_text: Custom - CloudedBats-WURB-2020
-    # microphone_model_code: 
+    # microphone_model_code:
     microphone_model_text: Pettersson u384
-    # gain_level: 
+    # gain_level:
     microphone_high_pass_filter_khz: 1
-    # microphone_low_pass_filter_khz: 
-    # pause_between_rec_s: 
-    # is_noise_filter_activated: 
-    monitoring_event_comment: Licence CC0 1.0
+    # microphone_low_pass_filter_khz:
+    # pause_between_rec_s:
+    # is_noise_filter_activated:
+    monitoring_event_comment: License CC0 1.0
 
 dynamicMetadata:
     - monitoring_site
@@ -39,4 +41,3 @@ dynamicMetadata:
     - detection_limit_khz
     - detection_sensitivity_dbfs
     - rec_length_s
-
