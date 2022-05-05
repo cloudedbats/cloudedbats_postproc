@@ -24,12 +24,12 @@ class GeneratorTadaridaD:
         """ """
         config_path = pathlib.Path(config_file)
         with open(config_path) as file:
-            dwca_config = yaml.load(file, Loader=yaml.FullLoader)
+            config_dict = yaml.load(file, Loader=yaml.FullLoader)
 
-        if "pathToTadatridaD" in dwca_config:
-            self.tadatrida_d = dwca_config["pathToTadatridaD"]
-        if "baseDirectory" in dwca_config:
-            self.base_dir = dwca_config["baseDirectory"]
+        if "pathToTadatridaD" in config_dict:
+            self.tadatrida_d = config_dict["pathToTadatridaD"]
+        if "baseDirectory" in config_dict:
+            self.base_dir = config_dict["baseDirectory"]
 
     def build_dir_list(self):
         """ """
