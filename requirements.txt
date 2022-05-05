@@ -1,11 +1,11 @@
-# YAML:
+# YAML.
 pyyaml
-#dict2xml
-# Timezones:
+# Plotting.
+matplotlib
+scipy
+# Timezones.
 pytz
 python-dateutil
-# Command line:
-click
 # VS Code:
 pylint
 black

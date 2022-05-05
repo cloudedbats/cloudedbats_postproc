@@ -1,0 +1,8 @@
+# Source code: https://github.com/cloudedbats/cloudedbats_postproc
+
+sourceDirectory:
+    ../spectrograms/source
+targetDirectory:
+    ../spectrograms/target
+
+
