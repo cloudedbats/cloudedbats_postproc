@@ -1,0 +1,8 @@
+# Source code: https://github.com/cloudedbats/cloudedbats_postproc
+
+sourceDirectory:
+    ../peakplot/source
+targetDirectory:
+    ../peakplot/target
+
+

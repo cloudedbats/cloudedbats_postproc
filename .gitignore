@@ -3,4 +3,5 @@ venv
 
 *_log.txt
 *.wav
-
+*.png
+*.jpg
