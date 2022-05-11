@@ -5,14 +5,8 @@
 # License: MIT License (see LICENSE.txt or http://opensource.org/licenses/mit).
 
 import pathlib
-from re import A
 import yaml
-import matplotlib
 import matplotlib.figure
-
-# from scipy import signal
-# from scipy.io import wavfile
-# import numpy
 import datetime
 import dateutil.parser
 
@@ -27,6 +21,8 @@ class PeakPlotGenerator:
         self.source_file_list = []
         self.plot_list = []
         self.plot_data = []
+        # Init plot.
+        self.init_matplotlib()
 
     def load_config(self, config_file="peakplot_config.yaml"):
         """ """
@@ -77,27 +73,36 @@ class PeakPlotGenerator:
                 data_row = [parent_name, time, position, peak_khz, peak_dbfs]
                 self.plot_data.append(data_row)
 
-    def cleanup(self):
+    def init_matplotlib(self):
         """ """
-        # wav_files = list(pathlib.Path(self.source_directory).glob("**/*.wav"))
-        # wav_files = [str(file.name) for file in wav_files]
-        # spectrogram_files = list(pathlib.Path(self.target_directory).glob("**/*_SPECTROGRAM.jpg"))
-        # for spectrogram_file in spectrogram_files:
-        #     target_file_name = spectrogram_file.name
-        #     target_file_name = target_file_name.replace("_SPECTROGRAM.jpg", ".wav")
-        #     if target_file_name not in wav_files:
-        #         spectrogram_file.unlink() # Remove file.
-        #         print("Wav file is missing, spectrogram deleted: ", str(spectrogram_file.name))
+        matplotlib.rcParams.update({"font.size": 6})
+        self.figure = matplotlib.figure.Figure(
+            figsize=(10, 3),
+            dpi=300,
+        )
+        self.ax1 = self.figure.add_subplot(111)
+        # Axes.
+        self.ax1.set_ylabel("Peak frequency (kHz)")
+        self.ax1.set_ylim((0, 100))
+        xfmt = matplotlib.dates.DateFormatter("%H:%M")
+        self.ax1.xaxis.set_major_formatter(xfmt)
+        self.ax1.xaxis.set_major_locator(
+            matplotlib.dates.HourLocator(byhour=None, interval=1)
+        )
+        self.ax1.yaxis.set_major_locator(matplotlib.ticker.MultipleLocator(10))
+        # Grid.
+        self.ax1.minorticks_on()
+        self.ax1.grid(which="major", linestyle="-", linewidth="0.5", alpha=0.5)
+        self.ax1.grid(which="minor", linestyle="-", linewidth="0.4", alpha=0.2)
+        self.ax1.tick_params(
+            which="both", top="off", left="off", right="off", bottom="off"
+        )
 
     def create_plots(self):
         """ """
         try:
             for plot_name in sorted(self.plot_list):
-
-                # Plot figure.
-                matplotlib.rcParams.update({"font.size": 6})
-                figure = matplotlib.figure.Figure(figsize=(10, 2), dpi=500)
-                ax1 = figure.add_subplot(111)
+                print("Processing: ", plot_name)
 
                 x = [
                     dateutil.parser.parse(x[1].split("+")[0])
@@ -113,42 +118,25 @@ class PeakPlotGenerator:
                 end_datetime = plot_date + datetime.timedelta(hours=30)
 
                 # Create scatter plot.
-                ax1.scatter(x, y, marker=".", color='blue', s=5)
+                self.ax1.scatter(x, y, marker=".", color="blue", s=5)
 
                 # Title and labels.
                 title = plot_name.replace("_", " ")
                 if len(x) == 1:
-                    title += "     (One sound file recorded.)"
+                    title += "     (One sound file recorded)"
                 else:
-                    title += "     (" + str(len(x)) + " sound files recorded.)"
-                ax1.set_title(title, fontsize=8)
-                ax1.set_ylabel("Peak frequency (kHz)")
-                ax1.set_ylim((0, 100))
-                # ax1.set_xlabel("Time")
-                ax1.set_xlim((start_datetime, end_datetime))
-                xfmt = matplotlib.dates.DateFormatter("%H:%M")
-                ax1.xaxis.set_major_formatter(xfmt)
-                ax1.xaxis.set_major_locator(
-                    matplotlib.dates.HourLocator(byhour=None, interval=1)
-                )
-                ax1.yaxis.set_major_locator(matplotlib.ticker.MultipleLocator(10))
-
-                # Grid.
-                ax1.minorticks_on()
-                ax1.grid(which="major", linestyle="-", linewidth="0.5", alpha=0.5)
-                ax1.grid(which="minor", linestyle="-", linewidth="0.4", alpha=0.2)
-                ax1.tick_params(
-                    which="both", top="off", left="off", right="off", bottom="off"
-                )
+                    title += "     (" + str(len(x)) + " sound files recorded)"
+                self.ax1.set_title(title, fontsize=8)
+                self.ax1.set_xlim((start_datetime, end_datetime))
 
                 # Save.
-                figure.tight_layout()
+                self.figure.tight_layout()
                 target_path = pathlib.Path(
                     self.target_directory, plot_place, plot_name + "_PEAKS.png"
                 )
                 if not target_path.parent.exists():
                     target_path.parent.mkdir(parents=True)
-                figure.savefig(str(target_path))
+                self.figure.savefig(str(target_path))
 
         except Exception as e:
             print("EXCEPTION in create_plots: ", e)
@@ -163,4 +151,3 @@ if __name__ == "__main__":
     generator.build_plot_list()
     generator.extract_data()
     generator.create_plots()
-    generator.cleanup()
