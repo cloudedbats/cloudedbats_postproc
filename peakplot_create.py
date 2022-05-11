@@ -9,6 +9,7 @@ import yaml
 import matplotlib.figure
 import datetime
 import dateutil.parser
+import gc
 
 
 class PeakPlotGenerator:
@@ -81,22 +82,6 @@ class PeakPlotGenerator:
             dpi=300,
         )
         self.ax1 = self.figure.add_subplot(111)
-        # Axes.
-        self.ax1.set_ylabel("Peak frequency (kHz)")
-        self.ax1.set_ylim((0, 100))
-        xfmt = matplotlib.dates.DateFormatter("%H:%M")
-        self.ax1.xaxis.set_major_formatter(xfmt)
-        self.ax1.xaxis.set_major_locator(
-            matplotlib.dates.HourLocator(byhour=None, interval=1)
-        )
-        self.ax1.yaxis.set_major_locator(matplotlib.ticker.MultipleLocator(10))
-        # Grid.
-        self.ax1.minorticks_on()
-        self.ax1.grid(which="major", linestyle="-", linewidth="0.5", alpha=0.5)
-        self.ax1.grid(which="minor", linestyle="-", linewidth="0.4", alpha=0.2)
-        self.ax1.tick_params(
-            which="both", top="off", left="off", right="off", bottom="off"
-        )
 
     def create_plots(self):
         """ """
@@ -128,6 +113,22 @@ class PeakPlotGenerator:
                     title += "     (" + str(len(x)) + " sound files recorded)"
                 self.ax1.set_title(title, fontsize=8)
                 self.ax1.set_xlim((start_datetime, end_datetime))
+                # Axes.
+                self.ax1.set_ylabel("Peak frequency (kHz)")
+                self.ax1.set_ylim((0, 100))
+                xfmt = matplotlib.dates.DateFormatter("%H:%M")
+                self.ax1.xaxis.set_major_formatter(xfmt)
+                self.ax1.xaxis.set_major_locator(
+                    matplotlib.dates.HourLocator(byhour=None, interval=1)
+                )
+                self.ax1.yaxis.set_major_locator(matplotlib.ticker.MultipleLocator(10))
+                # Grid.
+                self.ax1.minorticks_on()
+                self.ax1.grid(which="major", linestyle="-", linewidth="0.5", alpha=0.5)
+                self.ax1.grid(which="minor", linestyle="-", linewidth="0.4", alpha=0.2)
+                self.ax1.tick_params(
+                    which="both", top="off", left="off", right="off", bottom="off"
+                )
 
                 # Save.
                 self.figure.tight_layout()
@@ -137,6 +138,10 @@ class PeakPlotGenerator:
                 if not target_path.parent.exists():
                     target_path.parent.mkdir(parents=True)
                 self.figure.savefig(str(target_path))
+                self.ax1.cla()
+                # Run garbage collector to avoid memory overload.
+                gc.collect()
+
 
         except Exception as e:
             print("EXCEPTION in create_plots: ", e)
