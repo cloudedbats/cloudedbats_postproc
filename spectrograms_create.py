@@ -88,17 +88,6 @@ class SpectrogramGenerator:
             # Plot figure.
         )
         self.ax1 = self.figure.add_subplot(111)
-        # Axes.
-        self.ax1.set_ylabel("Frequency (kHz)")
-        self.ax1.set_xlabel("Time (s)")
-        self.ax1.set_ylim((0, 100))
-        # Grid.
-        self.ax1.minorticks_on()
-        self.ax1.grid(which="major", linestyle="-", linewidth="0.5", alpha=0.7)
-        self.ax1.grid(which="minor", linestyle="-", linewidth="0.5", alpha=0.3)
-        self.ax1.tick_params(
-            which="both", top="off", left="off", right="off", bottom="off"
-        )
 
     def create_spectrogram(self, source_path, target_path):
         """ """
@@ -128,6 +117,17 @@ class SpectrogramGenerator:
             # Title and labels.
             self.ax1.set_title(
                 "File: " + str(pathlib.Path(source_path).name), fontsize=8
+            )
+            # Axes.
+            self.ax1.set_ylabel("Frequency (kHz)")
+            self.ax1.set_xlabel("Time (s)")
+            self.ax1.set_ylim((0, 100))
+            # Grid.
+            self.ax1.minorticks_on()
+            self.ax1.grid(which="major", linestyle="-", linewidth="0.5", alpha=0.7)
+            self.ax1.grid(which="minor", linestyle="-", linewidth="0.5", alpha=0.3)
+            self.ax1.tick_params(
+                which="both", top="off", left="off", right="off", bottom="off"
             )
             # Save.
             self.figure.tight_layout()
