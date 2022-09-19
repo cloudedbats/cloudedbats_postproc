@@ -19,6 +19,7 @@ class GeneratorTadaridaD:
         self.base_dir = ""
         # Work.
         self.dir_list = []
+        self.not_generated_dir_list = []
 
     def load_config(self, config_file="tadarida_d_config.yaml"):
         """ """
@@ -43,9 +44,23 @@ class GeneratorTadaridaD:
             if len(wav_files) > 0:
                 self.dir_list.append(str(tmp_dir))
 
+    def check_dir_list(self):
+        """ """
+        self.not_generated_dir_list = []
+        for wav_dir in sorted(self.dir_list):
+            wav_dir_path = pathlib.Path(wav_dir)
+            wave_file_list = [f. stem for f in wav_dir_path.glob("*.wav")]
+            ta_file_list = [f.stem for f in wav_dir_path.glob("txt/*.ta")]
+            is_generated_and_equal = False
+            if len(wave_file_list) == len(ta_file_list):
+                if sorted(wave_file_list) == sorted(ta_file_list):
+                    is_generated_and_equal = True
+            if not is_generated_and_equal:
+                self.not_generated_dir_list.append(wav_dir)
+
     def generate_ta(self):
         """ """
-        for wav_dir in sorted(self.dir_list):
+        for wav_dir in sorted(self.not_generated_dir_list):
             print("\nDEBUG: Generates TA files for: ", wav_dir)
             list_files = subprocess.run([self.tadatrida_d, wav_dir])
             print("Finished with exit code: %d" % list_files.returncode)
@@ -70,7 +85,9 @@ if __name__ == "__main__":
     generator = GeneratorTadaridaD()
     generator.load_config()
     generator.build_dir_list()
+    # Check if already generated in directory.
+    generator.check_dir_list()
     # Run Tadarida-D.
     # generator.generate_ta()
     # Remove ta-files with no corresponding wav files.
-    generator.cleanup()
+    # generator.cleanup()
