@@ -5,4 +5,9 @@
 
 pathToTadatridaD: /home/pi/Tadarida-D/install_rpi/TadaridaD
 
-baseDirectory: /mnt/usb4tb/rec2022/
+sourceDirList: 
+  - /mnt/usb4tb/rec2022/se-o-1
+  - /mnt/usb4tb/rec2022/wurb51
+  - /mnt/usb4tb/rec2022/wurb52
+  - /mnt/usb4tb/rec2022/wurb53
+
